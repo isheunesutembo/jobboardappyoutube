@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jobboardapp/features/auth/controller/auth_controller.dart';
+import 'package:jobboardapp/util/custom_text_field.dart';
+
+class SignInScreen extends ConsumerStatefulWidget {
+  const SignInScreen({super.key});
+
+  @override
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends ConsumerState<SignInScreen> {
+  final _emailController=TextEditingController();
+  final _passwordController=TextEditingController();
+
+  bool isAsyncCallProcess=false;
+  static final GlobalKey<FormState>_signinKey=GlobalKey<FormState>();
+
+  bool validateAndSave(){
+    final form =_signinKey.currentState;
+    if(form!.validate()){
+      form.save();
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  @override
+  void dispose() {
+ _emailController.dispose();
+ _passwordController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Text("Welcome ,SignIn",
+              style: TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
+            ),
+            const SizedBox(height: 50,),
+            Form(key: _signinKey,child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomTextField(controller: _emailController,
+                hinttext: "Enter Your Email",),
+              ),
+              const SizedBox(height: 15,),
+                Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomTextField(controller: _passwordController,
+                hinttext: "Enter Your Password",),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 70,
+                  child: ElevatedButton(onPressed: (){
+                    if(validateAndSave()){
+                      ref.read(authControllerProvider.notifier)
+                      .logInWithEmailAndPassword(_emailController.text, _passwordController.text, context);
+                    }
+                  
+                  },style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)
+                    )
+                  ), child: Text("Sign In",
+                  style: TextStyle(color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),)),
+                ),
+              ),
+               const SizedBox(height: 15,),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, "/registerscreen");
+                    },
+                    child: Center(
+                      child: Text("Don't have an account? Register",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
+                      ),),
+                    ),
+                  )
+            ],)
+            )
+          ],
+        ),
+      ) ,
+    );
+  }
+}
