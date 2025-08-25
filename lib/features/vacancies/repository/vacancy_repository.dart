@@ -55,7 +55,7 @@ Future<Either<AppFailure,List<VacancyModel>>>getVacanciesByCategory({required St
     try{
 
       if(response.statusCode==200){
-        return Right(vacanciesFromJson(data['vacancies']));
+        return Right(vacanciesFromJson(data));
       }else{
        return  Left(AppFailure(message: data["message"]));
       }
@@ -72,7 +72,8 @@ Future<Either<AppFailure,List<VacancyModel>>>getVacanciesByCategory({required St
       "Content-Type":"application/json"
     };
 
-    var url=Uri.http(AppConfig.baseUrl,"${AppConfig.vacanciesUrl}/search?query=$search");
+    var url =
+        Uri.parse("http://${AppConfig.baseUrl}${AppConfig.vacanciesUrl}/search?query=$search");
 
     var response=await _client.get(url,headers:requestHeaders);
 

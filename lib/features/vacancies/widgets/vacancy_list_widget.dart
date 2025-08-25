@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobboardapp/features/vacancies/controller/vacancy_controller.dart';
@@ -10,8 +11,15 @@ class VacancyListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    final vacancies=ref.watch(getVacanciesProvider);
+    final vacancies=ref.watch(searchVacanciesProvider);
     return vacancies.when(data: (vacancies){
+      if(vacancies.isEmpty){
+        return Center(child: Text("No Vacancies Found",
+        style: TextStyle(
+          fontSize: 15,color: Colors.black,
+          fontWeight: FontWeight.bold
+        ),));
+      }
       return ListView.builder(shrinkWrap: true,itemCount: vacancies.length,physics: const NeverScrollableScrollPhysics(),itemBuilder: (context,index){
         return VacancyItemWidget(vacancyModel: vacancies[index]);
       });

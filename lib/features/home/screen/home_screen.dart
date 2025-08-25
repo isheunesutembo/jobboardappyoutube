@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobboardapp/features/categories/widgets/category_widget.dart';
+import 'package:jobboardapp/features/vacancies/controller/vacancy_controller.dart';
 import 'package:jobboardapp/features/vacancies/widgets/vacancy_list_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -36,6 +38,9 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 70,
                 width: double.infinity
                 ,child: Card(color: Colors.white,elevation: 5,child: TextField(
+                  onChanged:(value){
+                    ref.read(searchQueryProvider.notifier).state=value;
+                  } ,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 40),
                     prefixIcon: Icon(Icons.search,size: 30,color: Colors.black,
@@ -62,10 +67,15 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w600),),
-                Text("See All",
-                style: TextStyle(color: Colors.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w300),)
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, "/allvacanciesscreen");
+                  },
+                  child: Text("See All",
+                  style: TextStyle(color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),),
+                )
               ],),
             ),
             VacancyListWidget()

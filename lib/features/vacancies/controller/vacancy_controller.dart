@@ -144,6 +144,7 @@ class VacancyController extends AsyncNotifier<PaginationState<VacancyModel>>{
   }
 
    Future<List<VacancyModel>>searchVacancies(String search)async{
+    await Future.delayed(const Duration(milliseconds: 3000));
     final res=await _vacancyRepository.searchVacancies(search);
     return switch(res){
       Left(value:final l)=>throw l,
