@@ -4,8 +4,12 @@ import 'package:jobboardapp/features/auth/repository/local_repository.dart';
 import 'package:jobboardapp/features/auth/screens/register_screen.dart';
 import 'package:jobboardapp/features/auth/screens/sign_in_screen.dart';
 import 'package:jobboardapp/features/main/screen/main_screen.dart';
+import 'package:jobboardapp/features/resumes/screen/add_resume_screen.dart';
+import 'package:jobboardapp/features/resumes/screen/resume_screen.dart';
+import 'package:jobboardapp/features/resumes/screen/resume_setail_screen.dart';
 import 'package:jobboardapp/features/vacancies/screen/all_vacancies_screen.dart';
 import 'package:jobboardapp/features/vacancies/screen/vacancy_by_category_screen.dart';
+import 'package:jobboardapp/features/vacancies/screen/vacancy_details_screen.dart';
 import 'package:jobboardapp/util/color.dart';
 import 'package:jobboardapp/util/route.dart';
 
@@ -40,7 +44,11 @@ class MyApp extends StatelessWidget {
         Routes.signinscreen:(context)=>SignInScreen(),
         Routes.registercreen:(context)=>RegisterScreen(),
         Routes.allvacanciesscreen:(context)=>AllVacanciesScreen(),
-        Routes.vacanciesbycategoryscreen:(context)=>VacancyByCategoryScreen()
+        Routes.vacanciesbycategoryscreen:(context)=>VacancyByCategoryScreen(),
+        Routes.vacancydetailscreen:(context)=>VacancyDetailsScreen(),
+        Routes.resumescreen:(context)=>ResumeScreen(),
+        Routes.resumedetailscreen:(context)=>ResumeDetailScreen(),
+             Routes.addresumescreen:(context)=>AddResumeScreen()
       },
     );
   }

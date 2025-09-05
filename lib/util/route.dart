@@ -7,4 +7,8 @@ class Routes{
   static const String vacanciesbycategoryscreen= "/vacanciesbycategoryscreen";
   static const String registercreen= '/registerscreen';
   static const String allvacanciesscreen=  "/allvacanciesscreen";
+    static const String vacancydetailscreen=  "/vacancydetailscreen";
+     static const String resumescreen=  "/resumescreen";
+     static const String resumedetailscreen=  "/resumedetailscreen";
+     static const String addresumescreen=  "/addresumescreen";
 }

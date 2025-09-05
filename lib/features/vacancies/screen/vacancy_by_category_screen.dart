@@ -11,43 +11,44 @@ class VacancyByCategoryScreen extends ConsumerWidget {
   const VacancyByCategoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final category =
+        ModalRoute.of(context)!.settings.arguments as CategoryModel;
 
-    final category=ModalRoute.of(context)!.settings.arguments as CategoryModel;
-    
-    final vacancy=ref.watch(getVacanciesByCategoryProvider(category.categoryId.toString()));
+    final vacancy = ref.watch(
+      getVacanciesByCategoryProvider(category.categoryId.toString()),
+    );
     return vacancy.when(
       data: (data) {
-
-
-       
-          
-          return  Scaffold(
-            appBar: AppBar(
-              title: Text("All Vacancies",
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "All Vacancies",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black
-              ),),
-              
+                color: Colors.black,
+              ),
             ),
-            body: Column(
-              children: [
-
-        if(data.isEmpty)...{
-          Center(child: Text('No Vacancies In This Category'),)
-        }else...{
- Expanded(child: ListView.builder(physics: BouncingScrollPhysics(),itemCount: data.length,
-                shrinkWrap: true,itemBuilder: (context,index){
-                  return VacancyItemWidget(vacancyModel: data[index]);
-                })),
-        }
-               
-                
-              ],
-            ),
-          );
-        
+          ),
+          body: Column(
+            children: [
+              if (data.isEmpty) ...{
+                Center(child: Text('No Vacancies In This Category')),
+              } else ...{
+                Expanded(
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: data.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return VacancyItemWidget(vacancyModel: data[index]);
+                    },
+                  ),
+                ),
+              },
+            ],
+          ),
+        );
       },
       error: (error, stackTrace) => Errortext(error: error.toString()),
       loading: () => Loader(),

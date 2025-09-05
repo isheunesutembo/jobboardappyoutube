@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jobboardapp/features/vacancies/controller/vacancy_controller.dart';
 import 'package:jobboardapp/features/vacancies/widgets/vacancy_item_widget.dart';
 import 'package:jobboardapp/util/errortext.dart';
 import 'package:jobboardapp/util/loader.dart';
+import 'package:jobboardapp/util/route.dart';
 
 class VacancyListWidget extends ConsumerWidget {
   const VacancyListWidget({super.key});
@@ -21,7 +21,10 @@ class VacancyListWidget extends ConsumerWidget {
         ),));
       }
       return ListView.builder(shrinkWrap: true,itemCount: vacancies.length,physics: const NeverScrollableScrollPhysics(),itemBuilder: (context,index){
-        return VacancyItemWidget(vacancyModel: vacancies[index]);
+        return GestureDetector(onTap: (){
+          Navigator.pushNamed(context,Routes.vacancydetailscreen,
+          arguments:vacancies[index] );
+        },child: VacancyItemWidget(vacancyModel: vacancies[index]));
       });
     }, error: (error,stackTrace)=>Errortext(error: error.toString()), loading: ()=>Loader());
   }
